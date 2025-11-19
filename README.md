@@ -4,7 +4,7 @@ Este es un pequeño juego de Python creado con Pygame.
 
 # Estudiantes:
 ASENCIO FLORES AMY
-QUIMIS PINCAY EDITH MABEL
+1- QUIMIS PINCAY EDITH MABEL
 BORBOR ORRALA ODALYS NOEMI
 
 ## Cómo jugar
