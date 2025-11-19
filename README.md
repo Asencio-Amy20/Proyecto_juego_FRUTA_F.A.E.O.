@@ -2,10 +2,13 @@
 
 Este es un pequeño juego de Python creado con Pygame.
 
-# Estudiantes:
-ASENCIO FLORES AMY
-1- QUIMIS PINCAY EDITH MABEL
-BORBOR ORRALA ODALYS NOEMI
+# Autores del Proyecto
+
+El equipo de desarrollo para este juego está compuesto por:
+
+* ASENCIO FLORES AMY
+* QUIMIS PINCAY EDITH MABEL
+* BORBOR ORRALA ODALYS NOEMI
 
 ## Cómo jugar
 1. Asegúrate de tener Python instalado.
