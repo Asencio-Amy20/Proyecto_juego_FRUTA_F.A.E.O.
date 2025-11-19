@@ -1,4 +1,4 @@
-# Proyecto Juego FRUTA AMYA
+# Proyecto Juego FRUTA F.A.E.O.
 
 Este es un pequeño juego de Python creado con Pygame.
 
