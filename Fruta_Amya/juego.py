@@ -167,6 +167,8 @@ for obstaculo in self.obstaculos:
             self.pantalla.fill((200, 255, 200))
 
             self.fruta.dibujar(self.pantalla)
+            for powerup in self.powerups:
+                powerup.dibujar(self.pantalla)
             for obstaculo in self.obstaculos:
                 obstaculo.dibujar(self.pantalla)
             self.jugador.dibujar(self.pantalla)
@@ -180,10 +182,30 @@ for obstaculo in self.obstaculos:
             texto_velocidad = fuente.render(f"Velocidad: {self.velocidad_jugador:.1f}", True, (0, 0, 255))
             self.pantalla.blit(texto_velocidad, (650, 10))
 
+            if self.powerup_activo and self.tiempo_powerup > 0:
+               tiempo_restante = self.tiempo_powerup // 30  # Convertir a segundos
+               if self.powerup_activo == "velocidad":
+                  texto_powerup = fuente.render(f"⚡ VELOCIDAD: {tiempo_restante}s", True, (255, 255, 0))
+               elif self.powerup_activo == "escudo":
+                    texto_powerup = fuente.render(f"🛡️ ESCUDO: {tiempo_restante}s", True, (0, 191, 255))
+               elif self.powerup_activo == "tiempo_lento":
+                    texto_powerup = fuente.render(f" LENTO: {tiempo_restante}s", True, (147, 112, 219))
+               else:
+                   texto_powerup = fuente.render(f"Power-up: {tiempo_restante}s", True, (255, 255, 255))
+    
+               self.pantalla.blit(texto_powerup, (250, 10))
+
+
+           if self.tiene_escudo:
+              pygame.draw.circle(self.pantalla, (0, 191, 255), 
+                      (int(self.jugador.x + 30), int(self.jugador.y + 30)), 45, 3)
+
+
             pygame.display.update()
             self.reloj.tick(30)
 
         pygame.quit()
+
 
 
 
