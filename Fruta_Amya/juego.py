@@ -204,7 +204,42 @@ for obstaculo in self.obstaculos:
             pygame.display.update()
             self.reloj.tick(30)
 
-        pygame.quit()
+            if self.guardar_record()
+               if self.pantalla_game_over():
+
+                   def guardar_record(self):
+                       """Guarda el puntaje en el archivo de récords si es top 5"""
+                       try:
+                          try:
+                              with open("records.txt", "r") as archivo:
+                                  records = []
+                                  for linea in archivo:
+                                      if linea.strip():
+                                         puntaje = int(linea.split(" - ")[0])
+                                         records.append(puntaje)
+                              except:
+                                    records = []
+                                 records.append(self.puntaje)
+                                 records.sort(reverse=True)
+                                 records = records[:5]  # Solo top 5
+        
+       
+                              with open("records.txt", "w") as archivo:
+                                   for i, puntaje in enumerate(records):
+                                       archivo.write(f"{puntaje} - Jugador{i+1}\n")
+        
+                             print(f"Puntaje guardado: {self.puntaje}")
+                         except Exception as e:
+                             print(f"Error al guardar récord: {e}")
+
+
+    
+                  self.__init__()
+                  self.iniciar()
+            else:
+                pygame.quit()
+
+
 
 
 
