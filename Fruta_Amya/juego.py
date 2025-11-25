@@ -10,12 +10,10 @@ class Juego:
         self.pantalla = pantalla
         self.reloj = pygame.time.Clock()
 
-        # Objetos del juego
         self.jugador = Jugador(400, 300)
         self.fruta = Fruta()
         self.obstaculos = [Obstaculo()]
-        
-        # Variables del juego
+
         self.velocidad_jugador = 5
         self.powerups = []
         self.tiempo_spawn_powerup = 0
@@ -26,12 +24,10 @@ class Juego:
         self.puntaje = 0
         self.ejecutando = True
 
-
     def checar_colisiones(self):
         jugador_rect = pygame.Rect(self.jugador.x, self.jugador.y, 60, 60)
         fruta_rect = pygame.Rect(self.fruta.x, self.fruta.y, 40, 40)
 
-        # Colisión con fruta
         if jugador_rect.colliderect(fruta_rect):
             self.puntaje += 1
             self.fruta = Fruta()
@@ -46,7 +42,6 @@ class Juego:
             if self.puntaje % 20 == 0:
                 self.velocidad_jugador = max(2, self.velocidad_jugador - 0.5)
 
-        # Colisión con obstáculos
         for obst in self.obstaculos:
             obst_rect = pygame.Rect(obst.x, obst.y, 70, 70)
             if jugador_rect.colliderect(obst_rect):
@@ -108,12 +103,10 @@ class Juego:
                 self.activar_powerup(power.tipo)
                 self.powerups.remove(power)
 
-        # Reducir duración del powerup
         if self.powerup_activo and self.tiempo_powerup > 0:
             self.tiempo_powerup -= 1
 
             if self.tiempo_powerup <= 0:
-
                 if self.powerup_activo == "velocidad":
                     self.velocidad_jugador = 5
 
@@ -126,16 +119,12 @@ class Juego:
 
                 self.powerup_activo = None
 
- 
     def guardar_record(self):
         try:
             try:
                 with open("records.txt", "r") as archivo:
-                    records = []
-                    for linea in archivo:
-                        if linea.strip():
-                            punt = int(linea.split(" - ")[0])
-                            records.append(punt)
+                    records = [int(linea.split(" - ")[0]) 
+                               for linea in archivo if linea.strip()]
             except:
                 records = []
 
@@ -146,16 +135,15 @@ class Juego:
             with open("records.txt", "w") as archivo:
                 for i, punt in enumerate(records):
                     archivo.write(f"{punt} - Jugador{i+1}\n")
+
             return True
 
         except:
             return False
 
-
     def pantalla_game_over(self):
         fuente_grande = pygame.font.Font(None, 80)
         fuente_mediana = pygame.font.Font(None, 50)
-        fuente_pequeña = pygame.font.Font(None, 36)
 
         self.pantalla.fill((0, 0, 0))
 
@@ -174,13 +162,11 @@ class Juego:
             for e in pygame.event.get():
                 if e.type == pygame.QUIT:
                     return "salir"
-
                 if e.type == pygame.KEYDOWN and e.key == pygame.K_SPACE:
                     esperando = False
 
         return "menu"
 
-  
     def iniciar(self):
         fuente = pygame.font.Font(None, 36)
         self.ejecutando = True
@@ -219,4 +205,3 @@ class Juego:
 
         self.guardar_record()
         return self.pantalla_game_over()
-
