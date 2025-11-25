@@ -131,11 +131,11 @@ class Menu:
                 "  ESC",
                 "",
                 "POWER-UPS:",
-                "  ⚡ Velocidad - Muévete más rápido",
-                "  🛡️ Escudo - Protección temporal",
-                "  ⏰ Tiempo Lento - Ralentiza enemigos",
-                "  💎 Fruta Dorada - +5 puntos",
-                "  💣 Bomba - Destruye obstáculos"
+                "  Velocidad - Muévete más rápido",
+                "   Escudo - Protección temporal",
+                "  Tiempo Lento - Ralentiza enemigos",
+                "   Fruta Dorada - +5 puntos",
+                "   Bomba - Destruye obstáculos"
             ]
             
             y = 180
