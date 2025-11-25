@@ -55,6 +55,86 @@ class Juego:
             self.ejecutando = False
             break
 
+    def spawn_powerup(self):
+    """Genera power-ups aleatoriamente"""
+    self.tiempo_spawn_powerup += 1
+    
+    
+    if self.tiempo_spawn_powerup >= 300:
+        if random.randint(1, 100) <= 40:
+            self.powerups.append(PowerUp())
+            print(f"¡Power-up apareció! Tipo: {self.powerups[-1].tipo}")
+        self.tiempo_spawn_powerup = 0
+
+    def activar_powerup(self, tipo):
+    """Activa el efecto del power-up recolectado"""
+    self.powerup_activo = tipo
+    
+    if tipo == "velocidad":
+        self.velocidad_jugador = 10  
+        self.tiempo_powerup = 150  
+        print("⚡ ¡VELOCIDAD ACTIVADA!")
+    
+    elif tipo == "escudo":
+        self.tiene_escudo = True
+        self.tiempo_powerup = 90  
+        print("🛡️ ¡ESCUDO ACTIVADO!")
+    
+    elif tipo == "tiempo_lento":
+        for obstaculo in self.obstaculos:
+            self.velocidad_obstaculos_original = obstaculo.velocidad
+            obstaculo.velocidad = obstaculo.velocidad * 0.3 
+        self.tiempo_powerup = 150 
+        print("⏰ ¡TIEMPO LENTO ACTIVADO!")
+    
+    elif tipo == "fruta_dorada":
+        self.puntaje += 5  
+        print("¡+5 PUNTOS!")
+        self.powerup_activo = None 
+    
+    elif tipo == "bomba":
+        
+        if len(self.obstaculos) > 1:
+            self.obstaculos = [self.obstaculos[0]]
+        
+        self.obstaculos[0] = Obstaculo()
+        print("¡BOMBA! Obstáculos destruidos")
+        self.powerup_activo = None  
+
+    def actualizar_powerups(self):
+    """Actualiza el estado de los power-ups activos"""
+   
+    self.powerups = [p for p in self.powerups if p.esta_vivo()]
+    
+    # Verificar colisiones con power-ups
+    jugador_rect = pygame.Rect(self.jugador.x, self.jugador.y, 60, 60)
+    for powerup in self.powerups[:]:
+        powerup_rect = pygame.Rect(powerup.x - powerup.tamano, powerup.y - powerup.tamano, 
+                                   powerup.tamano * 2, powerup.tamano * 2)
+        if jugador_rect.colliderect(powerup_rect):
+            self.activar_powerup(powerup.tipo)
+            self.powerups.remove(powerup)
+    
+   
+    if self.powerup_activo and self.tiempo_powerup > 0:
+        self.tiempo_powerup -= 1
+        
+        if self.tiempo_powerup <= 0:
+            if self.powerup_activo == "velocidad":
+                self.velocidad_jugador = 5
+                print("⚡ Velocidad terminó")
+            
+            elif self.powerup_activo == "escudo":
+                self.tiene_escudo = False
+                print("🛡️ Escudo terminó")
+            
+            elif self.powerup_activo == "tiempo_lento":
+                for obstaculo in self.obstaculos:
+                    obstaculo.velocidad = obstaculo.velocidad / 0.3  
+                print("⏰ Tiempo lento terminó")
+            
+            self.powerup_activo = None
+
     def iniciar(self):
         fuente = pygame.font.Font(None, 36)
 
@@ -92,6 +172,7 @@ class Juego:
             self.reloj.tick(30)
 
         pygame.quit()
+
 
 
 
