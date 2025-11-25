@@ -3,6 +3,7 @@ from jugador import Jugador
 from fruta import Fruta
 from obstaculo import Obstaculo
 from powerup import PowerUp
+import random
 
 class Juego:
     def __init__(self):
@@ -43,17 +44,26 @@ class Juego:
             self.obstaculos.append(nuevo_obstaculo)
             print(f"¡Nuevo obstáculo! Total: {len(self.obstaculos)}")
         
-        # Cada 20 frutas: el jugador se vuelve más lento (cansancio)
+        
         if self.puntaje % 20 == 0 and self.puntaje > 0:
             self.velocidad_jugador = max(2, self.velocidad_jugador - 0.5)
             print(f"¡Cansancio! Velocidad jugador: {self.velocidad_jugador}")
     
-    # Verificar colisión con todos los obstáculos
-    for obstaculo in self.obstaculos:
-        obstaculo_rect = pygame.Rect(obstaculo.x, obstaculo.y, 70, 70)
-        if jugador_rect.colliderect(obstaculo_rect):
+       
+for obstaculo in self.obstaculos:
+    obstaculo_rect = pygame.Rect(obstaculo.x, obstaculo.y, 70, 70)
+    if jugador_rect.colliderect(obstaculo_rect):
+        if self.tiene_escudo:
+            
+            self.tiene_escudo = False
+            self.powerup_activo = None
+            self.tiempo_powerup = 0
+            print("🛡️ ¡Escudo bloqueó el ataque!")
+            obstaculo.x = random.randint(100, 700)
+            obstaculo.y = random.randint(100, 500)
+        else:
             self.ejecutando = False
-            break
+        break
 
     def spawn_powerup(self):
     """Genera power-ups aleatoriamente"""
@@ -172,6 +182,7 @@ class Juego:
             self.reloj.tick(30)
 
         pygame.quit()
+
 
 
 
