@@ -12,7 +12,7 @@ class Juego:
         self.pantalla = pygame.display.set_mode((800, 600))
         pygame.display.set_caption("FrutaManía 🍎")
         self.reloj = pygame.time.Clock()
-
+ 
         self.jugador = Jugador(400, 300)
         self.fruta = Fruta()
 
@@ -258,6 +258,7 @@ class Juego:
         self.pantalla_game_over()
         self.__init__()
         self.iniciar()
+
 
 
 
